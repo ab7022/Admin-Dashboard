@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/styles/styles.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <script src="/js/script.js" defer></script>
+</head>
+
+<body>
+  <main>
+    <div class="search-container">
+      <input type="text" name="title" id="title" placeholder="Search Here" required list="" />
+      <button id="btn-search">Search</button>
+      <form onsubmit="enableDelete(this.elements['delete-button']); return false;">
+        <button type="submit" class="delete" name="delete-button">
+          <i class='far'>&#xf2ed;</i>
+        </button>
+      </form>
+    </div>
+    <div class="status-container"></div>
+    <table>
+      <thead>
+        <tr>
+          <th><input type="checkbox" name="" id="check-all" /></th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="book-list">
+        <% members.forEach(member=> { %>
+          <tr>
+            <td><input type="checkbox" name="" /></td>
+            <td>
+              <input type="text" name="name" id="" value="<%= member.name %>" />
+            </td>
+            <td>
+              <input type="text" name="email" id="" value="<%= member.email %>" />
+            </td>
+            <td>
+              <input type="text" name="role" id="" value="<%= member.role %>" />
+            </td>
+            <td>
+              <div class="actions">
+                <form method="GET" action="/edit/<%= member.id %>"
+                  onsubmit="enableEdit(this.elements['submit-button'], event)">
+                  <button type="submit" class="edit" name="submit-button">
+                    <i class="far">&#xf044;</i>
+                  </button>
+                </form>
+
+                <form onsubmit="enableDelete(this.elements['delete-button']); return false;">
+                  <button type="submit" class="delete" name="delete-button">
+                    <i class='far'>&#xf2ed;</i>
+                  </button>
+                </form>
+
+              </div>
+            </td>
+          </tr>
+          <% }); %>
+      </tbody>
+    </table>
+
+    <div id="pagination">
+
+      <div class="pagenumber">
+        <p>Page <span>
+            <%= currentPage %>
+          </span> of <%= totalPages %>
+        </p>
+      </div>
+
+      <a href="/?page=1" class="first-page">&laquo;</a>
+      <a href="/?page=<%= currentPage - 1 %>" class="previous page">&lt;</a>
+
+      <% for (let i=1; i <=totalPages; i++) { %>
+        <a href="/?page=<%= i %>">
+          <%= i %>
+        </a>
+
+        <% } %>
+          <a href="/?page=<%= currentPage + 1 %>" class="next page">&gt;</a>
+
+          <a href="/?page=<%= totalPages %>" class="last page">&raquo;</a>
+    </div>
+  </main>
+</body>
+</html>
