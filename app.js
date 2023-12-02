@@ -11,11 +11,7 @@ app.use(express.json());
 dotenv.config({
   path:"./data/config.env"
 })
-//hola
-app.get("/a",(req,res) {
 
-  res.render("index")
-})
 app.get("/", (req, res) => {
   http
     .get(
