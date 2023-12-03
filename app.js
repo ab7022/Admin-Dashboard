@@ -2,15 +2,11 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const http = require("http");
-const dotenv = require("dotenv")
 const router = express.Router()
 app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "public/views"));
 app.set("view engine", "ejs");
 app.use(express.json());
-dotenv.config({
-  path:"./data/config.env"
-})
 
 app.get("/", (req, res) => {
   http
@@ -36,11 +32,13 @@ app.get("/", (req, res) => {
             const endIdx = startIdx + pageSize;
             const paginatedMembers = members.slice(startIdx, endIdx);
             const totalPages = Math.ceil(members.length / pageSize);
+    
 
             res.render("index", {
               members: paginatedMembers,
               currentPage: page,
               totalPages: totalPages,
+              ids:ids,
             });
           } catch (error) {
             console.error(error.message);
@@ -54,9 +52,4 @@ app.get("/", (req, res) => {
       res.status(500).send("Internal Server Error");
     });
 });
-// app.use("/.netlify/functions/api",router)
-// // app.listen(3000);
-// module.exports.handler = serverless(app) 
-app.listen(process.env.PORT,() =>{
-  console.log(`server is running on ${process.env.PORT}`)
-})
+app.listen(4000)
