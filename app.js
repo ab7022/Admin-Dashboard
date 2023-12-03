@@ -52,4 +52,4 @@ app.get("/", (req, res) => {
       res.status(500).send("Internal Server Error");
     });
 });
-app.listen(4000)
+app.listen(process.env.PORT)
